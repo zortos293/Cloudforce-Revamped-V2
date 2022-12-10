@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Cloudforce_Revamped_V3.GamesJSON;
@@ -26,9 +28,6 @@ namespace Cloudforce_Revamped_V3
             {
                 MessageBox.Show("Cant Download while something is downloading");
                 return;
-            }
-            if (!string.IsNullOrEmpty(GameJSON.Games[currentjsonint].GameDownloadURL))
-            {
             }
             var username = Environment.UserName;
             WebClient client = new WebClient();
@@ -55,15 +54,31 @@ namespace Cloudforce_Revamped_V3
             process.StartInfo.RedirectStandardError = false;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (LoginTools.SubExist("premium") || LoginTools.SubExist("booster"))
+            if (GameJSON.Games[JsonNumber].GamePaid)
             {
-                MessageBox.Show("Using Google Drive (Premium)");
-                process.StartInfo.Arguments = LoginTools.KeyAuthApp.var("Gdrive") + GameJSON.Games[JsonNumber].GameDownloadCloudURL + " " + mainpath + GameJSON.Games[JsonNumber].GameDownloadCloudURL;
+                if (LoginTools.SubExist("premium"))
+                {
+                    process.StartInfo.Arguments = LoginTools.KeyAuthApp.var("Gdrive") + GameJSON.Games[JsonNumber].GameDownloadCloudURL + " " + mainpath + GameJSON.Games[JsonNumber].GameDownloadCloudURL;
+                }
+                else
+                {
+                    MessageBox.Show("You need to be premium to download this game");
+                    return;
+                }
             }
             else
             {
-                process.StartInfo.Arguments = "copy -P --transfers=4 --checkers=16 " + "zortosdrive:\\" + GameJSON.Games[JsonNumber].GameDownloadCloudURL + " " + mainpath + GameJSON.Games[JsonNumber].GameDownloadCloudURL;
+                if (LoginTools.SubExist("premium") || LoginTools.SubExist("booster"))
+                {
+                    MessageBox.Show("Using Google Drive (Premium)");
+                    process.StartInfo.Arguments = LoginTools.KeyAuthApp.var("Gdrive") + GameJSON.Games[JsonNumber].GameDownloadCloudURL + " " + mainpath + GameJSON.Games[JsonNumber].GameDownloadCloudURL;
+                }
+                else
+                {
+                    process.StartInfo.Arguments = "copy -P --transfers=4 --checkers=16 " + "zortosdrive:\\" + GameJSON.Games[JsonNumber].GameDownloadCloudURL + " " + mainpath + GameJSON.Games[JsonNumber].GameDownloadCloudURL;
+                }
             }
+
             Done = false;
             Done = false;
             process.Exited += new EventHandler(p_Exited);
@@ -76,7 +91,7 @@ namespace Cloudforce_Revamped_V3
                 Application.DoEvents();
             }
             // ----------------------------------------------------------------------------------------------------------
-            //                                                  Custom Patches
+            //                                                  Custom Patches (After game Download)
             // ----------------------------------------------------------------------------------------------------------
             if (GameJSON.Games[currentjsonint].GameName == "Overwatch" && !LoginTools.SubExist("premium") && !LoginTools.SubExist("booster")) // Overwatch
             {
@@ -113,9 +128,54 @@ namespace Cloudforce_Revamped_V3
                 }
                 bool a = startgame(currentjsonint);
             }
+            if (GameJSON.Games[currentjsonint].GameName == "Fall Guys" && LoginTools.SubExist("premium")) // Fall Guys
+            {
+                Process process1 = new Process();
+                Done = false;
+                process1.OutputDataReceived += new DataReceivedEventHandler(process_OutputDataReceived);
+                process1.StartInfo.FileName = mainpath + "downloader.exe";
+                process1.StartInfo.UseShellExecute = false;
+                process1.StartInfo.RedirectStandardOutput = true;
+                process1.StartInfo.RedirectStandardError = false;
+                process1.StartInfo.CreateNoWindow = true;
+                process1.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process1.StartInfo.Arguments = LoginTools.KeyAuthApp.var("Gdrive") + "EpicGames.zip" + " " + mainpath;
+                process1.Exited += new EventHandler(p_Exited);
+                process1.EnableRaisingEvents = true;
+                progressBar.Invoke(new Action(() => progressBar.Visible = true));
+                htmllabel.Invoke(new Action(() => htmllabel.Visible = true));
+                process1.Start();
+                process1.BeginOutputReadLine();
+                while (Done == false)
+                {
+                    Application.DoEvents();
+                }
+                bool extractdone = false;
+                DownloadBTN.Invoke(new Action(() => DownloadBTN.Text = "Extracting"));
+                await Task.Run(() =>
+                {
+                    ZipFile.ExtractToDirectory(mainpath + "EpicGames.zip", mainpath + "");
+                    extractdone = true;
+                });
+                while (extractdone == false)
+                {
+                    Application.DoEvents();
+                }
+                extractdone = false;
+                Directory.CreateDirectory(@"c:\ProgramData\Epic");
+                Directory.CreateDirectory(@"c:\ProgramData\Epic\EpicGamesLauncher");
+                Directory.CreateDirectory(@"c:\ProgramData\Epic\EpicGamesLauncher\Data");
+                Directory.CreateDirectory(@"c:\ProgramData\Epic\EpicGamesLauncher\Data\Manifests");
+                bool a = startgame(currentjsonint);
+
+                MessageBox.Show("Login to epic games and press start");
+            }
+            // ----------------------------------------------------------------------------------------------------------
+            //                                          END        Custom Patches (After game Download)
+            // ----------------------------------------------------------------------------------------------------------
         }
 
-        private void process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        private void process_OutputDataReceived(object sender, DataReceivedEventArgs e) // While Downloading
         {
             var username = Environment.UserName;
             try
@@ -157,7 +217,7 @@ namespace Cloudforce_Revamped_V3
             }
         }
 
-        private void p_Exited(object sender, EventArgs e)
+        private void p_Exited(object sender, EventArgs e) // After Downlload Finishes
         {
             try
             {
@@ -173,8 +233,43 @@ namespace Cloudforce_Revamped_V3
             Done = true;
         }
 
-        public bool startgame(int jsonnumber)
+        public async void Fallmeguys()
         {
+            if (Process.GetProcessesByName("EpicGamesLauncher").Length > 0) // Kill Epic games
+            {
+                Process[] ps = Process.GetProcessesByName("EpicGamesLauncher");
+
+                foreach (Process p in ps)
+                    p.Kill();
+            }
+            await Task.Delay(2000);
+            // Wait for Epic games Launcher to start
+            byte[] result = LoginTools.KeyAuthApp.download("108975"); // Download Method
+            File.WriteAllBytes(Path.GetTempPath() + "28j17hsasd.bat", result); // Save the method to a batch file
+            byte[] pwet = LoginTools.KeyAuthApp.download("041744");
+            File.WriteAllBytes(LoginTools.KeyAuthApp.var("Fallguys").Replace(@"\", @"\\"), pwet);
+            Process.Start(mainpath + GameJSON.Games[currentjsonint].GameExe); // Start Epic games
+
+            await Task.Delay(15000);
+            Process.Start(Path.GetTempPath() + "28j17hssdad.bat"); // run the Method
+        }
+
+        public bool startgame(int jsonnumber) // Starts Game
+        {
+            if (GameJSON.Games[jsonnumber].GameName == "Fall Guys")
+            {
+                MessageBox.Show("Fall Guys next update !!");
+                return true;
+                if (File.Exists(mainpath + GameJSON.Games[jsonnumber].GameExe))
+                {
+                    Fallmeguys();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             if (File.Exists(mainpath + GameJSON.Games[jsonnumber].GameExe))
             {
                 Process.Start(mainpath + GameJSON.Games[jsonnumber].GameExe);

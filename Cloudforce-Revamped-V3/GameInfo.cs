@@ -46,7 +46,7 @@ namespace Cloudforce_Revamped_V3
 
         private async void DownloadBTN_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(GamesJSON.GameJSON.Games[CurentAppJSONInt].GameDownloadURL))
+            if (GamesJSON.GameJSON.Games[CurentAppJSONInt].GameDownloadURL.EndsWith(".exe") || GamesJSON.GameJSON.Games[CurentAppJSONInt].GameDownloadURL.EndsWith(".zip"))
             {
                 if (proccesrun() == false)
                 {

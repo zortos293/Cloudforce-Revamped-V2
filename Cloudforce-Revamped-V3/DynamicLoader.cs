@@ -105,7 +105,7 @@ namespace Cloudforce_Revamped_V3
                 button.CustomImages.ImageOffset = new System.Drawing.Point(5, 0);
                 button.CustomImages.ImageSize = new System.Drawing.Size(20, 20);
                 BTNNames.Add(button.Name);
-                button.Size = new System.Drawing.Size(205, 40);
+                button.Size = new System.Drawing.Size(190, 40);
                 button.BorderRadius = 6;
                 button.ImageAlign = HorizontalAlignment.Left;
                 WebClient wc = new WebClient();

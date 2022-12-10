@@ -59,6 +59,7 @@
             this.AppsFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.GamesPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2VScrollBar2 = new Guna.UI2.WinForms.Guna2VScrollBar();
             this.GamesFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.GameInfo = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
@@ -106,6 +107,8 @@
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Transition1 = new Guna.UI2.WinForms.Guna2Transition();
             this.guna2Transition2 = new Guna.UI2.WinForms.Guna2Transition();
+            this.guna2HtmlLabel15 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel16 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.TopBarpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserImage)).BeginInit();
             this.FormTabs.SuspendLayout();
@@ -134,7 +137,7 @@
             this.guna2Transition1.SetDecoration(this.TopBarpanel, Guna.UI2.AnimatorNS.DecorationType.None);
             this.TopBarpanel.Location = new System.Drawing.Point(-1, -1);
             this.TopBarpanel.Name = "TopBarpanel";
-            this.TopBarpanel.Size = new System.Drawing.Size(985, 48);
+            this.TopBarpanel.Size = new System.Drawing.Size(985, 52);
             this.TopBarpanel.TabIndex = 0;
             // 
             // CloseBTN
@@ -216,7 +219,7 @@
             this.guna2Transition2.SetDecoration(this.UsernameLBL, Guna.UI2.AnimatorNS.DecorationType.None);
             this.guna2Transition1.SetDecoration(this.UsernameLBL, Guna.UI2.AnimatorNS.DecorationType.None);
             this.UsernameLBL.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UsernameLBL.Location = new System.Drawing.Point(783, 16);
+            this.UsernameLBL.Location = new System.Drawing.Point(783, 18);
             this.UsernameLBL.Name = "UsernameLBL";
             this.UsernameLBL.Size = new System.Drawing.Size(114, 18);
             this.UsernameLBL.TabIndex = 1;
@@ -286,6 +289,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(37)))), ((int)(((byte)(61)))));
+            this.tabPage1.Controls.Add(this.guna2HtmlLabel16);
+            this.tabPage1.Controls.Add(this.guna2HtmlLabel15);
             this.tabPage1.Controls.Add(this.RequestAPPBTN);
             this.tabPage1.Controls.Add(this.RequestBTN);
             this.tabPage1.Controls.Add(this.CustomDownloadBTN);
@@ -424,9 +429,9 @@
             this.guna2HtmlLabel1.ForeColor = System.Drawing.Color.White;
             this.guna2HtmlLabel1.Location = new System.Drawing.Point(11, 6);
             this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(59, 19);
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(65, 19);
             this.guna2HtmlLabel1.TabIndex = 0;
-            this.guna2HtmlLabel1.Text = "V3.0 DEV";
+            this.guna2HtmlLabel1.Text = "V3.1 BETA";
             // 
             // tabPage2
             // 
@@ -540,6 +545,7 @@
             // GamesPanel
             // 
             this.GamesPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(53)))), ((int)(((byte)(84)))));
+            this.GamesPanel.Controls.Add(this.guna2VScrollBar2);
             this.GamesPanel.Controls.Add(this.GamesFlowPanel);
             this.GamesPanel.CustomizableEdges.BottomLeft = false;
             this.GamesPanel.CustomizableEdges.BottomRight = false;
@@ -547,24 +553,42 @@
             this.guna2Transition1.SetDecoration(this.GamesPanel, Guna.UI2.AnimatorNS.DecorationType.None);
             this.GamesPanel.Location = new System.Drawing.Point(0, 37);
             this.GamesPanel.Name = "GamesPanel";
-            this.GamesPanel.Size = new System.Drawing.Size(202, 441);
+            this.GamesPanel.Size = new System.Drawing.Size(216, 441);
             this.GamesPanel.TabIndex = 7;
+            // 
+            // guna2VScrollBar2
+            // 
+            this.guna2VScrollBar2.BindingContainer = this.GamesFlowPanel;
+            this.guna2VScrollBar2.BorderRadius = 6;
+            this.guna2Transition2.SetDecoration(this.guna2VScrollBar2, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2Transition1.SetDecoration(this.guna2VScrollBar2, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2VScrollBar2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(37)))), ((int)(((byte)(61)))));
+            this.guna2VScrollBar2.InUpdate = false;
+            this.guna2VScrollBar2.LargeChange = 10;
+            this.guna2VScrollBar2.Location = new System.Drawing.Point(198, 0);
+            this.guna2VScrollBar2.Name = "guna2VScrollBar2";
+            this.guna2VScrollBar2.ScrollbarSize = 18;
+            this.guna2VScrollBar2.Size = new System.Drawing.Size(18, 441);
+            this.guna2VScrollBar2.TabIndex = 8;
+            this.guna2VScrollBar2.ThumbColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.guna2VScrollBar2.ThumbStyle = Guna.UI2.WinForms.Enums.ThumbStyle.Inset;
             // 
             // GamesFlowPanel
             // 
+            this.GamesFlowPanel.AutoScroll = true;
             this.guna2Transition1.SetDecoration(this.GamesFlowPanel, Guna.UI2.AnimatorNS.DecorationType.None);
             this.guna2Transition2.SetDecoration(this.GamesFlowPanel, Guna.UI2.AnimatorNS.DecorationType.None);
             this.GamesFlowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GamesFlowPanel.Location = new System.Drawing.Point(0, 0);
             this.GamesFlowPanel.Name = "GamesFlowPanel";
-            this.GamesFlowPanel.Size = new System.Drawing.Size(202, 441);
+            this.GamesFlowPanel.Size = new System.Drawing.Size(216, 441);
             this.GamesFlowPanel.TabIndex = 0;
             // 
             // GameInfo
             // 
             this.guna2Transition2.SetDecoration(this.GameInfo, Guna.UI2.AnimatorNS.DecorationType.None);
             this.guna2Transition1.SetDecoration(this.GameInfo, Guna.UI2.AnimatorNS.DecorationType.None);
-            this.GameInfo.Location = new System.Drawing.Point(213, 7);
+            this.GameInfo.Location = new System.Drawing.Point(222, 7);
             this.GameInfo.Name = "GameInfo";
             this.GameInfo.Size = new System.Drawing.Size(757, 465);
             this.GameInfo.TabIndex = 6;
@@ -1480,6 +1504,32 @@
             this.guna2Transition2.MaxAnimationTime = 500;
             this.guna2Transition2.TimeStep = 0.08F;
             // 
+            // guna2HtmlLabel15
+            // 
+            this.guna2HtmlLabel15.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Transition2.SetDecoration(this.guna2HtmlLabel15, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2Transition1.SetDecoration(this.guna2HtmlLabel15, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2HtmlLabel15.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2HtmlLabel15.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel15.Location = new System.Drawing.Point(352, 83);
+            this.guna2HtmlLabel15.Name = "guna2HtmlLabel15";
+            this.guna2HtmlLabel15.Size = new System.Drawing.Size(302, 21);
+            this.guna2HtmlLabel15.TabIndex = 11;
+            this.guna2HtmlLabel15.Text = "OxiWan copycat check cf server instead";
+            // 
+            // guna2HtmlLabel16
+            // 
+            this.guna2HtmlLabel16.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Transition2.SetDecoration(this.guna2HtmlLabel16, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2Transition1.SetDecoration(this.guna2HtmlLabel16, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2HtmlLabel16.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2HtmlLabel16.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel16.Location = new System.Drawing.Point(415, 110);
+            this.guna2HtmlLabel16.Name = "guna2HtmlLabel16";
+            this.guna2HtmlLabel16.Size = new System.Drawing.Size(172, 21);
+            this.guna2HtmlLabel16.TabIndex = 12;
+            this.guna2HtmlLabel16.Text = "Discord.gg/cloudforce";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1593,6 +1643,9 @@
         private Guna.UI2.WinForms.Guna2TextBox AppIconTXT;
         private Guna.UI2.WinForms.Guna2ProgressBar Progressbar;
         private Guna.UI2.WinForms.Guna2HtmlLabel DownloadLBL;
+        private Guna.UI2.WinForms.Guna2VScrollBar guna2VScrollBar2;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel16;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel15;
     }
 }
 
